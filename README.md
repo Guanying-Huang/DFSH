@@ -1,8 +1,12 @@
 # Comprehensive Resources for DFSH Decision-Support System
 
-This repository contains the consolidated implementation details supporting the findings of the study. The repository encompasses the source code for the IFC2KG algorithm, the prompt scripts for the LLM-driven regulatory KG construction, the pre-defined Python functions for Spatial KG retrieval, and the prompt scripts for each collaborative agent.
+This repository contains the supplementary materials and implementation details supporting the findings of the study. The repository encompasses the complete set of supplementary materials (Figures S1-S3, Tables S1-S9), the source code for the IFC2KG algorithm, the prompt scripts for the LLM-driven regulatory KG construction, the pre-defined Python functions for Spatial KG retrieval, and the prompt scripts for each collaborative agent.
 
-## 1. Spatial Knowledge Graph Construction
+## 1. Supplementary Materials
+
+This repository hosts the comprehensive supplementary files referenced in the manuscript, including **Figures S1-S3** and **Tables S1-S9**. 
+
+## 2. Spatial Knowledge Graph Construction
 
 This module contains the source code for constructing a hierarchical Spatial Knowledge Graph from as-built BIM data in IFC format. To enhance code readability and execution efficiency, the entire extraction and construction pipeline has been consolidated into a single comprehensive script (e.g., `ifc2kg_pipeline.py`) located in the root directory of this repository.
 
@@ -38,16 +42,16 @@ Reflecting its actual computational workflow, the execution logic of the consoli
 
 *(Note: The generated JSON and CSV artifacts from Phase 3 are then seamlessly utilized for direct bulk ingestion into the Neo4j graph database and the generation of interactive HTML visual representations).*
 
-## 2. Regulatory Knowledge Graph Prompts
+## 3. Regulatory Knowledge Graph Prompts
 
-This file (`prompts_regulatory_kg.md` located in the root directory) contains the comprehensive three-stage prompting strategy designed to drive the large language model in extracting, evaluating, and refining knowledge triples from unstructured regulatory texts. 
+This file (`prompts_regulatory_kg.md` located in the root directory) contains the comprehensive three-stage prompting strategy designed to drive the large language model in extracting, evaluating, and refining knowledge texts. 
 
 The prompting pipeline is architected into three specific stages:
 * **Stage 1: Initial Extraction**: Parses triples by enforcing predefined ontology categories, segmenting texts into clause-based units, recognizing cited documents, and translating embedded images.
 * **Stage 2: Iterative Feedback**: Autonomously evaluates initial outputs against the source text to rectify potential extraction omissions and repair malformed data structures.
 * **Stage 3: Final Canonicalization**: Performs logical consistency checks, eliminates invalid categories, cleans redundant characters, and deduplicates identical triples to improve overall data accuracy.
 
-## 3. BIM Navigator Graph Retrieval Tools
+## 4. BIM Navigator Graph Retrieval Tools
 
 This module details the implementation logic of the retrieval tools and their application within the multi-agent system. These functions, consolidated into a single script (`spatial_graph_retrieval_tools.py`) located in the root directory, are triggered by the large language model via Azure OpenAI Function Calling to execute Neo4j queries in a local Python environment.
 
@@ -63,7 +67,7 @@ This module details the implementation logic of the retrieval tools and their ap
 * **Connection Mode**: Employs a retrieval class encapsulation supporting database connection pool reuse to optimize concurrent retrieval performance.
 * **Data Security**: All Cypher statements utilize parameterization for entity properties. For structural variables that Neo4j does not natively support for parameterization, the system implements a strict whitelist validation mechanism in the Python execution layer prior to any f-string interpolation. Specifically, the `relation_type` parameter in the `get_connected_elements` function is strictly validated against an allowed list of semantic relationships. This dual approach effectively defends against injection risks.
 
-## 4. Multi-Agent System Prompts
+## 5. Multi-Agent System Prompts
 
 This file (`prompts_mas_agents.md` located in the root directory) contains the detailed system prompts governing the specific behaviors and cognitive architectures of the four collaborative agents. 
 
@@ -72,7 +76,6 @@ To strictly align with the dual-track cognitive architecture detailed in the man
 * **BIM Navigator**: Utilizes a ReAct Engine loop to autonomously invoke graph retrieval tools and extract verified spatial evidence.
 * **Regulation Expert**: Employs a ReAct Engine loop to perform semantic vector searches and retrieve gold-standard compliance evidence.
 * **Decision Maker**: Executes a Synthesis CoT workflow to cross-compare multi-source payloads and generate deterministic decision reports.
-
 
 ## Usage Instructions
 
